@@ -1,9 +1,11 @@
 import './styles/App.css'
+import { Route, Switch } from 'react-router-dom'
+import { useEffect } from 'react'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <h3>Redux Thunk Practice</h3>
+      <h3>Redux Movies</h3>
     </div>
   )
 }
