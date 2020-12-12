@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchButton = () => {
+const SearchButton = (props) => {
   const classes = useStyles();
 
   return (
@@ -18,6 +18,7 @@ const SearchButton = () => {
         size="small"
         className={classes.button}
         startIcon={<SearchRounded />}
+        onClick={props.onClick}
       >
         Search
       </Button>

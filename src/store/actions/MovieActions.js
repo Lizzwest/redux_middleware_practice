@@ -1,5 +1,5 @@
-import { GetAllGenres, GetTrending, GetMoviesByGenre } from '../../services/MovieServices';
-import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH } from '../types';
+import { GetAllGenres, GetTrending, GetMoviesByGenre, GetSearchMovies } from '../../services/MovieServices';
+import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES } from '../types';
 
 export const getAllGenres = () => async (dispatch) => {
     try {
@@ -38,5 +38,15 @@ export const getAllMoviesByGenre = (id, page, name) => async (dispatch) => {
             payload: {movies: movies, name: name}
         })
 
+    } catch(err) { throw err }
+}
+
+export const getSearchMovies = (query) => async (dispatch) => {
+    try {
+        const movies = await GetSearchMovies(query)
+        dispatch({
+            type: GET_SEARCH_MOVIES,
+            payload: movies
+        })
     } catch(err) { throw err }
 }

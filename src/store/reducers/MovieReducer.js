@@ -1,4 +1,4 @@
-const { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH } = require('../types')
+const { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES } = require('../types')
 
 const initialState = {
     genres: [],
@@ -19,6 +19,8 @@ const MovieReducer = (state = initialState, action) => {
             return { ...state, search: action.payload}
         case GET_ALL_MOVIES_BY_GENRE:
             return { ...state, movies: action.payload.movies, genre: action.payload.name}
+        case GET_SEARCH_MOVIES:
+            return { ...state, movies: action.payload.filter(m => m.poster_path!==null), genre: state.search, search: ''}
         default:
             return { ...state }
     }

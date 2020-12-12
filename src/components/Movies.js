@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { getAllGenres, getTrending, updateSearch, getAllMoviesByGenre } from '../store/actions/MovieActions'
+import { getAllGenres, getTrending, updateSearch, getAllMoviesByGenre, getSearchMovies } from '../store/actions/MovieActions'
 // import { Link } from 'react-router-dom'
 import TextInput from './TextInput'
 import SearchButton from './SearchButton'
@@ -15,18 +15,20 @@ const mapDispatchToProps = (dispatch) => {
         fetchGenres: () => dispatch(getAllGenres()),
         fetchTrending: () => dispatch(getTrending()),
         updateSearch: (e) => dispatch(updateSearch(e)),
-        fetchGenreMovies: (id) => dispatch(getAllMoviesByGenre(id))
+        fetchGenreMovies: (id, page, name) => dispatch(getAllMoviesByGenre(id, page, name)),
+        fetchMovieSearch: (query) => dispatch(getSearchMovies(query))
     }
 };
 
 const Movies = (props) => {
-    const {fetchGenres, fetchTrending, fetchGenreMovies, updateSearch, movieState} = props
+    const {fetchGenres, fetchTrending, fetchGenreMovies, fetchMovieSearch, updateSearch, movieState} = props
+    
     useEffect(() => {
         fetchGenres()
         fetchTrending()
     }, [fetchGenres, fetchTrending])
 
-    console.log(movieState.genre)
+    
 
     const genres = movieState.genres.map((genre, i) => {
         return  <li key={i} onClick={() => fetchGenreMovies(genre.id, 1, genre.name)} style={{backgroundColor: i%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
@@ -60,7 +62,7 @@ const Movies = (props) => {
                 <h1>Movies</h1>
                 <span>
                     <TextInput placeholder={'Search Movies'} value={movieState.search} onChange={(e) => updateSearch(e)} />
-                    <SearchButton />
+                    <SearchButton onClick={() => fetchMovieSearch(movieState.search)} />
                 </span>
             </span>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 5fr'}}>
@@ -72,7 +74,7 @@ const Movies = (props) => {
                 </div>
                 {movieState.movies.length ? 
                 <div>
-                    <h2>Trending Movies</h2>
+                    <h2>{movieState.genre} Movies</h2>
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         {movies}
                     </div>
