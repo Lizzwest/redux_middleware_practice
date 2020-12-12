@@ -54,8 +54,7 @@ const Movies = (props) => {
         )
     })
 
-    const search = movieState.search
-    console.log(search)
+   
     return (
         <div>
             <span style={{display: 'flex', justifyContent: 'space-between'}}>

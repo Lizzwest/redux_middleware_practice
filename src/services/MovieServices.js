@@ -17,10 +17,7 @@ export const GetTrending = async () => {
     } catch(err) {console.log(err)}
 }
 
-export const GetMoviesByGenre = async (id, page, name) => {
-    console.log(id)
-    console.log(page)
-    console.log(name)
+export const GetMoviesByGenre = async (id, page) => {
     try {
         const response = (id===99) ? await Client.get(`/discover/movie${API_KEY}&with_genres=${id}&with_original_language=en|ja|it|fr|de|ru|pt|es|sl|sv&sort_by=vote_average.desc&vote_count.gte=250&language=en&page=${page}`) : 
         await Client.get(`/discover/movie${API_KEY}&with_genres=${id}&with_original_language=en|ja|it|fr|de|ru|pt|es|sl|sv&sort_by=vote_average.desc&vote_count.gte=516&language=en&page=${page}`)
