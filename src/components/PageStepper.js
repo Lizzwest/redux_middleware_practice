@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux'
 import { getAllMoviesByGenre, getTrending } from '../store/actions/MovieActions'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -26,12 +26,12 @@ const useStyles = makeStyles({
 });
 
 const PageStepper = (props) => {
-  const {id} = props
+
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(props.movieState.page-1)
 
-  useEffect(() => setActiveStep(0), [id])
+
 
 
   const handleNext = () => {

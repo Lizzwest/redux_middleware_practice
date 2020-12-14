@@ -38,7 +38,11 @@ const Movies = (props) => {
     })
 
     const trending = movieState.trending.map((movie, i) => {
-        return  <Link key={i} to="/movie/details" onClick={() => fetchMovieDetails(movie.id)}>
+        return  <Link key={i} to="/movie/details" 
+                onClick={() => {
+                    fetchMovieDetails(movie.id);
+                    window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
                         <img src={IMG_URL + movie.poster_path} style={{ height: '30vh', width: '20vh', boxShadow: '0px 0px 5px cyan' }} alt="movie" />
                         <h3>{movie.title}</h3>
@@ -48,7 +52,11 @@ const Movies = (props) => {
     })
 
     const movies = movieState.movies.map((movie, i) => {
-        return  <Link key={i} to="/movie/details" onClick={() => fetchMovieDetails(movie.id)}>
+        return  <Link key={i} to="/movie/details" 
+                onClick={() => {
+                    fetchMovieDetails(movie.id);
+                    window.scroll({top: 0, left: 0, behavior: 'smooth'});
+                }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
                         <img src={IMG_URL + movie.poster_path} style={{ height: '30vh', width: '20vh', boxShadow: '0px 0px 5px cyan' }} alt="movie" />
                         <h3>{movie.title}</h3>
