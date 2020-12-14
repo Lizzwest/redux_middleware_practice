@@ -8,7 +8,7 @@ const initialState = {
     querySearch: '',
     search: '',
     page: 1,
-    movie: null
+    movieData: null
 }
 
 const MovieReducer = (state = initialState, action) => {
@@ -24,7 +24,7 @@ const MovieReducer = (state = initialState, action) => {
         case GET_SEARCH_MOVIES:
             return { ...state, movies: action.payload ? action.payload.filter(m => m.poster_path!==null) : [], search: state.querySearch, genre: ''}
         case GET_MOVIE_DETAILS:
-            return { ...state, movie: action.payload}
+            return { ...state, movieData: action.payload}
         default:
             return { ...state }
     }

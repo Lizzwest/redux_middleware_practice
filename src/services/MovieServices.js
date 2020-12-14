@@ -37,8 +37,10 @@ export const GetSearchMovies = async (query) => {
 export const GetMovieDetails = async (id) => {
     try {
         const response = await Client.get(`/movie/${id}${API_KEY}&append_to_response=videos`)
-        console.log(response.data)
-        return response.data
+        const streaming = await Client.get(`/movie/${id}/watch/providers${API_KEY}`)
+        console.log(response.data, streaming.data.results.US)
+        const returnData = {movie: response.data, stream: streaming.data.results.US}
+        return returnData
     } catch(err) {console.log(err)}
 }
 

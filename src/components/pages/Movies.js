@@ -32,7 +32,7 @@ const Movies = (props) => {
 
     const genres = movieState.genres.map((genre, i) => {
         return  <li key={i} className='genre-link' onClick={() => fetchGenreMovies(genre.id, 1, genre.name)} style={{backgroundColor: i%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
-                    <h3 style={{marginLeft: '10px'}}>{genre.name}</h3>
+                    <h3 style={{margin: '0 10px'}}>{genre.name}</h3>
                 </li>
                 
     })

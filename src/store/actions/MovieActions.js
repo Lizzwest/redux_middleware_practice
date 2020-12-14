@@ -43,20 +43,20 @@ export const getAllMoviesByGenre = (id, page, name) => async (dispatch) => {
 
 export const getSearchMovies = (query) => async (dispatch) => {
     try {
-        const movies = await GetSearchMovies(query)
+        const response = await GetSearchMovies(query)
         dispatch({
             type: GET_SEARCH_MOVIES,
-            payload: movies
+            payload: response
         })
     } catch(err) { throw err }
 }
 
 export const getMovieDetails = (id) => async (dispatch) => {
     try {
-        const movie = await GetMovieDetails(id)
+        const response = await GetMovieDetails(id)
         dispatch({
             type: GET_MOVIE_DETAILS,
-            payload: movie
+            payload: response
         })
     } catch(err) { throw err }
 }
