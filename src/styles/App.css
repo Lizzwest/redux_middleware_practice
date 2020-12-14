@@ -46,3 +46,13 @@ h1, h3, h5 {
   color: cyan;
   cursor: pointer;
 }
+
+.movie-info {
+  padding: 0 5px;
+}
+
+.movie-info p {
+  margin: 0;
+  text-shadow: none;
+  box-shadow: none;
+}
