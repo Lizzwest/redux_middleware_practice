@@ -1,5 +1,5 @@
-import { GetAllGenres, GetTrending, GetMoviesByGenre, GetSearchMovies } from '../../services/MovieServices';
-import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES } from '../types';
+import { GetAllGenres, GetTrending, GetMoviesByGenre, GetSearchMovies, GetMovieDetails } from '../../services/MovieServices';
+import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES, GET_MOVIE_DETAILS } from '../types';
 
 export const getAllGenres = () => async (dispatch) => {
     try {
@@ -35,7 +35,7 @@ export const getAllMoviesByGenre = (id, page, name) => async (dispatch) => {
         const movies = await GetMoviesByGenre(id, page, name)
         dispatch({
             type: GET_ALL_MOVIES_BY_GENRE,
-            payload: {movies: movies, name: name}
+            payload: {movies: movies, name: name, page: page}
         })
 
     } catch(err) { throw err }
@@ -47,6 +47,16 @@ export const getSearchMovies = (query) => async (dispatch) => {
         dispatch({
             type: GET_SEARCH_MOVIES,
             payload: movies
+        })
+    } catch(err) { throw err }
+}
+
+export const getMovieDetails = (id) => async (dispatch) => {
+    try {
+        const movie = await GetMovieDetails(id)
+        dispatch({
+            type: GET_MOVIE_DETAILS,
+            payload: movie
         })
     } catch(err) { throw err }
 }

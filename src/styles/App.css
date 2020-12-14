@@ -39,4 +39,10 @@ h1, h3, h5 {
 
 .movie-div:hover {
   color: cyan;
+  cursor: pointer;
+}
+
+.genre-link:hover {
+  color: cyan;
+  cursor: pointer;
 }
