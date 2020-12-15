@@ -42,8 +42,8 @@ const TVShows = (props) => {
 
     const trending = tvState.trending.map((show, i) => {
         return  <Link key={i} to="/show/details" 
-                onClick={() => {
-                    fetchShowDetails(show.id);
+                onClick={async () => {
+                    await fetchShowDetails(show.id);
                     window.scroll({top: 0, left: 0, behavior: 'smooth'});
                 }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
@@ -56,8 +56,8 @@ const TVShows = (props) => {
     
     const shows = tvState.shows.map((show, i) => {
         return  <Link key={i} to="/show/details" 
-                onClick={() => {
-                    fetchShowDetails(show.id);
+                onClick={async () => {
+                    await fetchShowDetails(show.id);
                     window.scroll({top: 0, left: 0, behavior: 'smooth'});
                 }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
@@ -83,7 +83,7 @@ const TVShows = (props) => {
                 }
                 <span>
                     <TextInput />
-                    <SearchButton onClick={() => fetchShowSearch(tvState.querySearch)} />
+                    <SearchButton onClick={async () => await fetchShowSearch(tvState.querySearch)} />
                 </span>
             </span>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 5fr'}}>

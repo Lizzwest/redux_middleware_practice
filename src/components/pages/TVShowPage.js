@@ -1,13 +1,21 @@
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 import Iframe from 'react-iframe'
+import AddButton from '../AddButton'
+import {addToWatchlistShows} from '../../store/actions/WatchListActions'
 
 const mapStateToProps = ({ tvState }) => {
     return { tvState }
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addShow: (show) => dispatch(addToWatchlistShows(show))
+    }
+};
+
 const MoviePage = (props) => {
-    const {tvState} = props
+    const {addShow, tvState} = props
     
     console.log(tvState.showData)
 
@@ -20,8 +28,9 @@ const MoviePage = (props) => {
                     <h1>{tvState.showData.show.name}</h1>
                 </span>
                 {tvState.showData.show.backdrop_path ? <img style={{width: '100%', height: 'auto'}} src={`https://image.tmdb.org/t/p/w1280${tvState.showData.show.backdrop_path}`} alt="backdrop" /> : <></>}
-                <div>
-                    <h2 style={{textAlign: 'right'}}>{tvState.showData.show.tagline==="" ? "About This Film" : tvState.showData.show.tagline}</h2>
+                <div style={{position: 'relative'}}>
+                    <h2 style={{textAlign: 'right'}}>{tvState.showData.show.tagline==="" ? "About This Show" : tvState.showData.show.tagline}</h2>
+                    <AddButton onClick={(e) => {e.preventDefault(); addShow(tvState.showData)}} />
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div>
                             <div style={{backgroundColor: 'black', boxShadow: '0px 0px 5px cyan', padding: '10px', borderRadius: '5px'}}>
@@ -65,7 +74,7 @@ const MoviePage = (props) => {
                                 <Iframe className='iframe' display="initial" title="trailer" frameBorder="0" src={`https://www.youtube.com/embed/${tvState.showData.show.videos.results.length > 1 ? tvState.showData.show.videos.results.find(r => r.size="Trailer").key : tvState.showData.show.videos.results[0].key}?version=3`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></Iframe>
                             </div>
                             :
-                            <></>
+                            <h3>No Trailer Available Currently</h3>
                             }
                         </div>
                     </div>
@@ -86,4 +95,4 @@ const MoviePage = (props) => {
     )
 };
 
-export default connect(mapStateToProps)(MoviePage)
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage)

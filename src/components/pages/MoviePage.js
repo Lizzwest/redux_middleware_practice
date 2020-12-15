@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const MoviePage = (props) => {
     const {movieState, fetchMovieDetails} = props
-  
+    console.log(movieState.movieData)
     const recommendations = movieState.movieData ? movieState.movieData.recommend.map((movie, i) => {
         return  <Link key={i} to="/movie/details" 
                 onClick={async () => {
@@ -102,7 +102,7 @@ const MoviePage = (props) => {
                             </div>
                             :
                             <h3>No Trailer Available Currently</h3>
-                            }   
+                            }
                         </div>
                     </div>
                 </div>
@@ -112,13 +112,30 @@ const MoviePage = (props) => {
                       {recommendations}
                     </div>
                 </div>
+                {movieState.movieData.reviews.length ? 
+                <div>
+                    <h2>Reviews</h2>
+                    <ul>
+                    {movieState.movieData.reviews.map((rev, i) => {
+                        return  <li key={i}>
+                                    <span style={{display: 'flex', marginBottom: '5px'}}>
+                                        <img style={{marginRight: '10px', height: '20px', width: '20px', borderRadius: '50%'}} src={rev.author_details.avatar_path===null||rev.author_details.avatar_path.includes('https') ? 'https://res.cloudinary.com/ahonore42/image/upload/v1601713558/blankprofile.jpg' : `https://image.tmdb.org/t/p/w45${rev.author_details.avatar_path}`} alt={rev.author}/><h3 style={{margin: '0'}}>{rev.author}</h3>
+                                    </span>
+                                    <p style={{margin: '10px', padding: '10px 2vw', backgroundColor: `#eef`, color: '#222', textShadow: '1px 0px 0px black', fontWeight: '500', borderRadius: '10px'}}>{rev.content}</p>
+                                </li>
+                    })}
+                    </ul>
+                </div>
+                :
+                <></>
+                }   
             </div>
             :
             <div>
                 <span style={{display: 'flex', justifyContent: 'space-between', marginBottom: '1vh'}}>
                     <Link to='/movies'>Back to Movies</Link>
                     <h1>Movie Not Found</h1>
-                </span>
+                </span>  
             </div>
             }
         </div>

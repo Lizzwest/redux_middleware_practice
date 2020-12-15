@@ -30,11 +30,12 @@ const Movies = (props) => {
         fetchTrending()
         clear()
     }, [fetchGenres, fetchTrending, clear])
-
+    
+    
 
     const genres = movieState.genres.map((genre, i) => {
-        return  <li key={i} className='genre-link' onClick={() => {
-            fetchGenreMovies(genre.id, 1, genre.name);
+        return  <li key={i} className='genre-link' onClick={async () => {
+            await fetchGenreMovies(genre.id, 1, genre.name);
             window.scroll({top: 0, left: 0, behavior: 'smooth'});
             }} 
             style={{backgroundColor: i%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
@@ -45,8 +46,8 @@ const Movies = (props) => {
 
     const trending = movieState.trending.map((movie, i) => {
         return  <Link key={i} to="/movie/details" 
-                onClick={() => {
-                    fetchMovieDetails(movie.id);
+                onClick={async () => {
+                    await fetchMovieDetails(movie.id);
                     window.scroll({top: 0, left: 0, behavior: 'smooth'});
                 }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
@@ -59,8 +60,8 @@ const Movies = (props) => {
 
     const movies = movieState.movies.map((movie, i) => {
         return  <Link key={i} to="/movie/details" 
-                onClick={() => {
-                    fetchMovieDetails(movie.id);
+                onClick={async () => {
+                    await fetchMovieDetails(movie.id);
                     window.scroll({top: 0, left: 0, behavior: 'smooth'});
                 }}>
                     <div className='movie-div' style={{ margin: '0 20px 10px 20px', maxWidth: '20vh'}} >
@@ -82,7 +83,7 @@ const Movies = (props) => {
                 }
                 <span>
                     <TextInput />
-                    <SearchButton onClick={() => fetchMovieSearch(movieState.querySearch)} />
+                    <SearchButton onClick={async () => await fetchMovieSearch(movieState.querySearch)} />
                 </span>
             </span>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 5fr'}}>
