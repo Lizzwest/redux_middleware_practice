@@ -4,7 +4,7 @@ import { getAllGenres, getTrending, getAllMoviesByGenre, getSearchMovies, getMov
 import { Link } from 'react-router-dom'
 import TextInput from '../MovieTextInput'
 import SearchButton from '../SearchButton'
-import PageStepper from '../PageStepper'
+import AppPagination from '../Pagination'
 const IMG_URL = process.env.REACT_APP_IMG_URL
 
 const mapStateToProps = ({ movieState }) => {
@@ -71,12 +71,13 @@ const Movies = (props) => {
             <span style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Movies</h1>
                 {movieState.genre ? 
-                    <PageStepper 
-                    id={movieState.genres.find(g => g.name===movieState.genre).id}
-                    page={movieState.page}
-                    name={movieState.genre}
-                    fetchPage={fetchGenreMovies}
-                    />
+                    // <PageStepper 
+                    // id={movieState.genres.find(g => g.name===movieState.genre).id}
+                    // page={movieState.page}
+                    // name={movieState.genre}
+                    // fetchPage={fetchGenreMovies}
+                    // />
+                    <AppPagination count={movieState.pages} name={movieState.genre.name} id={movieState.genre.id} fetchPage={fetchGenreMovies}/>
                     :
                     <></>
                 }
@@ -88,7 +89,7 @@ const Movies = (props) => {
             <div style={{display: 'grid', gridTemplateColumns: '1fr 5fr'}}>
                 <div>
                     <h2>Genres</h2>
-                    <ul style={{margin: '0 20px 0 0', width: '25vh', boxShadow: '0px 0px 5px cyan'}}>
+                    <ul style={{margin: '0 0 0 0', width: '25vh', boxShadow: '0px 0px 5px cyan'}}>
                         {genres}
                     </ul>
                 </div>

@@ -37,6 +37,10 @@ h1, h5 {
   background-color: black;
 }
 
+.MuiPaginationItem-root {
+  color: white;
+}
+
 .movie-div:hover {
   color: cyan;
   cursor: pointer;

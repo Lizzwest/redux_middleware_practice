@@ -32,10 +32,10 @@ export const updateSearch = (e) =>  (dispatch) => {
 
 export const getAllMoviesByGenre = (id, page, name) => async (dispatch) => {
     try {
-        const movies = await GetMoviesByGenre(id, page, name)
+        const response = await GetMoviesByGenre(id, page, name)
         dispatch({
             type: GET_ALL_MOVIES_BY_GENRE,
-            payload: {movies: movies, name: name, page: page}
+            payload: {movies: response, name: name, page: page}
         })
 
     } catch(err) { throw err }

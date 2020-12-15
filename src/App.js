@@ -6,9 +6,9 @@ import Movies from './components/pages/Movies'
 import TVShows from './components/pages/TVShows'
 import Watchlist from './components/pages/WatchList'
 import MoviePage from './components/pages/MoviePage'
+import TVShowPage from './components/pages/TVShowPage'
 
-const App = () => {
-
+const App = (props) => {
   return (
     <div className="App">
       <Layout>
@@ -17,6 +17,7 @@ const App = () => {
           <Route path='/movies' component={(props) => <Movies { ...props } />} />
           <Route path='/movie/details' component={(props) => <MoviePage { ...props} />} />
           <Route path='/shows' component={(props) => <TVShows { ...props } />} />
+          <Route path='/show/details' component={(props) => <TVShowPage { ...props } />} />
           <Route path='/watchlist' component={(props) => <Watchlist { ...props } />} />
         </Switch>
       </Layout>
