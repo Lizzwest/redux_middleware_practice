@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { getAllGenres, getTrending, getAllMoviesByGenre, getSearchMovies, getMovieDetails } from '../../store/actions/MovieActions'
+import { getAllGenres, getTrending, getAllMoviesByGenre, getSearchMovies, getMovieDetails, clearMovie } from '../../store/actions/MovieActions'
 import { Link } from 'react-router-dom'
 import TextInput from '../MovieTextInput'
 import SearchButton from '../SearchButton'
@@ -17,21 +17,27 @@ const mapDispatchToProps = (dispatch) => {
         fetchTrending: () => dispatch(getTrending()),
         fetchGenreMovies: (id, page, name) => dispatch(getAllMoviesByGenre(id, page, name)),
         fetchMovieSearch: (query) => dispatch(getSearchMovies(query)),
-        fetchMovieDetails: (id) => dispatch(getMovieDetails(id))
+        fetchMovieDetails: (id) => dispatch(getMovieDetails(id)),
+        clear: () => dispatch(clearMovie())
     }
 };
 
 const Movies = (props) => {
-    const {fetchGenres, fetchTrending, fetchGenreMovies, fetchMovieSearch, fetchMovieDetails, movieState} = props
+    const {fetchGenres, fetchTrending, fetchGenreMovies, fetchMovieSearch, fetchMovieDetails, clear, movieState} = props
     
     useEffect(() => {
         fetchGenres()
         fetchTrending()
-    }, [fetchGenres, fetchTrending])
+        clear()
+    }, [fetchGenres, fetchTrending, clear])
 
 
     const genres = movieState.genres.map((genre, i) => {
-        return  <li key={i} className='genre-link' onClick={() => fetchGenreMovies(genre.id, 1, genre.name)} style={{backgroundColor: i%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
+        return  <li key={i} className='genre-link' onClick={() => {
+            fetchGenreMovies(genre.id, 1, genre.name);
+            window.scroll({top: 0, left: 0, behavior: 'smooth'});
+            }} 
+            style={{backgroundColor: i%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
                     <h3 style={{margin: '0 10px'}}>{genre.name}</h3>
                 </li>
                 
@@ -62,7 +68,6 @@ const Movies = (props) => {
                         <h3>{movie.title}</h3>
                     </div>
                 </Link>
-        
     })
 
    
@@ -71,13 +76,7 @@ const Movies = (props) => {
             <span style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Movies</h1>
                 {movieState.genre ? 
-                    // <PageStepper 
-                    // id={movieState.genres.find(g => g.name===movieState.genre).id}
-                    // page={movieState.page}
-                    // name={movieState.genre}
-                    // fetchPage={fetchGenreMovies}
-                    // />
-                    <AppPagination count={movieState.pages} name={movieState.genre.name} id={movieState.genre.id} fetchPage={fetchGenreMovies}/>
+                    <AppPagination count={movieState.pages} page={movieState.page} name={movieState.genre} id={movieState.genres.find(g => g.name===movieState.genre).id} fetchPage={fetchGenreMovies}/>
                     :
                     <></>
                 }

@@ -21,13 +21,25 @@ const theme = createMuiTheme({
 
 
 const AppPagination = (props) => {
-    const {id, name, count, fetchPage} = props
+    const {id, name, count, page, fetchPage} = props
 
     return (
         <ThemeProvider theme={theme} >
-            <Pagination color='primary' count={count} showFirstButton showLastButton
-            onChange={(e) => fetchPage(id, parseInt(e.target.innerText), name)}
+            {name==='Anime' ? 
+            <Pagination page={page} color='primary' count={count} showFirstButton showLastButton
+            onChange={(e) => {
+                e.preventDefault()
+                fetchPage(parseInt(e.target.innerText))
+            }}
             />
+            :
+            <Pagination page={page} color='primary' count={count} showFirstButton showLastButton
+            onChange={(e) => {
+                e.preventDefault()
+                fetchPage(id, parseInt(e.target.innerText), name)
+            }}
+            />
+            }
         </ThemeProvider>
     );
 }

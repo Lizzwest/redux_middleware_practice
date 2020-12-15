@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { getAllGenres, getTrending, getAllShowsByGenre, getSearchShows, getShowDetails } from '../../store/actions/TVActions'
+import { getAllGenres, getTrending, getAllShowsByGenre, getAnimeShows, getSearchShows, getShowDetails, clearShow } from '../../store/actions/TVActions'
 import { Link } from 'react-router-dom'
-import TextInput from '../MovieTextInput'
+import TextInput from '../TVTextInput'
 import SearchButton from '../SearchButton'
-
+import AppPagination from '../Pagination'
 const IMG_URL = process.env.REACT_APP_IMG_URL
 
 const mapStateToProps = ({ tvState }) => {
@@ -17,17 +17,20 @@ const mapDispatchToProps = (dispatch) => {
         fetchTrending: () => dispatch(getTrending()),
         fetchGenreShows: (id, page, name) => dispatch(getAllShowsByGenre(id, page, name)),
         fetchShowSearch: (query) => dispatch(getSearchShows(query)),
-        fetchShowDetails: (id) => dispatch(getShowDetails(id))
+        fetchAnime: (page) => dispatch(getAnimeShows(page)),
+        fetchShowDetails: (id) => dispatch(getShowDetails(id)),
+        clear: () => dispatch(clearShow())
     }
 };
 
 const TVShows = (props) => {
-    const {fetchGenres, fetchTrending, fetchGenreShows, fetchShowSearch, fetchShowDetails, tvState} = props
+    const {fetchGenres, fetchTrending, fetchGenreShows, fetchAnime, fetchShowSearch, fetchShowDetails, clear, tvState} = props
     
     useEffect(() => {
-        fetchGenres()
-        fetchTrending()
-    }, [fetchGenres, fetchTrending])
+        fetchGenres();
+        fetchTrending();
+        clear();
+    }, [fetchGenres, fetchTrending, clear])
 
 
     const genres = tvState.genres.map((genre, i) => {
@@ -71,8 +74,10 @@ const TVShows = (props) => {
             <span style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Shows</h1>
                 {tvState.genre ? 
-                    <>
-                    </>
+                    tvState.genre==='Anime' ?
+                    <AppPagination count={tvState.pages} page={tvState.page} name={'Anime'} id={16} fetchPage={fetchAnime}/>
+                    :
+                    <AppPagination count={tvState.pages} page={tvState.page} name={tvState.genre} id={tvState.genres.find(g => g.name===tvState.genre).id} fetchPage={fetchGenreShows}/>
                     :
                     <></>
                 }
@@ -85,6 +90,9 @@ const TVShows = (props) => {
                 <div>
                     <h2>Genres</h2>
                     <ul style={{margin: '0 0 0 0', width: '25vh', boxShadow: '0px 0px 5px cyan'}}>
+                        <li key={29} className='genre-link' onClick={() => fetchAnime(1)} style={{backgroundColor: 29%2===0 ? 'rgba(255,255,255,0.1)' : 'rgba(240,240,240,0.1)', padding: '5px'}}>
+                            <h3 style={{margin: '0 10px'}}>Anime</h3>
+                        </li>
                         {genres}
                     </ul>
                 </div>

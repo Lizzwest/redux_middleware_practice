@@ -1,5 +1,5 @@
 import { GetAllGenres, GetTrending, GetMoviesByGenre, GetSearchMovies, GetMovieDetails } from '../../services/MovieServices';
-import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES, GET_MOVIE_DETAILS } from '../types';
+import { GET_ALL_MOVIE_GENRES, GET_ALL_MOVIES_BY_GENRE, GET_TRENDING_MOVIES, MOVIE_SEARCH, GET_SEARCH_MOVIES, GET_MOVIE_DETAILS, CLEAR_MOVIE } from '../types';
 
 export const getAllGenres = () => async (dispatch) => {
     try {
@@ -60,3 +60,6 @@ export const getMovieDetails = (id) => async (dispatch) => {
         })
     } catch(err) { throw err }
 }
+
+export const clearMovie = () => (dispatch) => dispatch({type: CLEAR_MOVIE, payload: null });
+   
